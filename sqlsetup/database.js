@@ -8,29 +8,19 @@ const pool = mysql.createPool({
     database : process.env.MYSQL_DATABASE
 }).promise()
 
-export async function getNotes(){
-    const[records] = await pool.query("select * from notes")
-    return records
-       
+
+export async function participate(req,res){
+    const {name,email,phone_no,address,date_of_birth,age,gender} = req.body
+
+    console.log(name,email,phone_no,address,date_of_birth,age,gender);
+    
+    const add = await pool.query(`
+        INSERT INTO Participant (name,email,phone_no,address,date_of_birth,age,gender) values (?,?,?,?,?,?,?)`,[name,email,phone_no,address,date_of_birth,age,gender])
+    
+    console.log(add[0]);
+    
+    return res
+    .send(`userregister`)
 }
-export async function getNote(id)
-{
-    const[records]= await pool.query(`
-        SELECT *
-        FROM NOTES
-        WHERE id = ?
-        `,[id]
-    )
-    return records[0]
-}
-export async function createNote(title,contents){
-    const [result] = await pool.query(`
-        INSERT INTO notes (title, contents)
-        VALUES (?, ?)
-        `,[title,contents])
-        const id = result.insertId
-        return getNote(id)
-}
-const result = await createNote('test','test')
-console.log(result)
+
 

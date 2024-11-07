@@ -120,15 +120,7 @@ function Navbar() {
                             Participant
                         </Link>
                     </li>
-                    <li className="px-6">
-                        <Link
-                            to="/payment"
-                            className="block text-lg hover:text-blue-300"
-                            onClick={handleLinkClick}
-                        >
-                            Payment
-                        </Link>
-                    </li>
+                    
                     <li className="px-6">
                         <Link
                             to="/session"
