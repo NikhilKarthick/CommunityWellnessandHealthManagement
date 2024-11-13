@@ -3,7 +3,7 @@ import React from "react";
 import './App.css';
 import Home from "./components/Home";
 import About from "./components/About";
-import Project from "./components/Project";
+import HealthDetails from "./components/HealthDetails";
 import Contact from "./components/Contact";
 // import {Route} from "react-router-dom";
 import Register from "./components/Register";
@@ -27,7 +27,7 @@ export default function App() {
       <Routes>
        <Route exact path = "/" element={<Home/>} />
        <Route exact path = "/about" element={<About/>} />
-       <Route exact path = "/project" element={<Project/>} />
+       <Route exact path = "/healthdetails" element={<HealthDetails/>} />
        <Route exact path = "/contact" element={<Contact/>} />
        <Route exact path="/register" element={<Register/>}/>
        <Route exact path="/enrollment" element={<Enrollment/>}/>

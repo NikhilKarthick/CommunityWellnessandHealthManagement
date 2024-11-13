@@ -4,8 +4,8 @@ import axios from 'axios';
 
 function Participant() {
   const [isSignUp, setIsSignUp] = useState(true);
-  
-  // State for new fields
+  const [showRedirectButton, setShowRedirectButton] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
@@ -13,10 +13,6 @@ function Participant() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-
-  const handleSignIn = () => {
-    setIsSignUp(false);
-  };
 
   const handleSignUp = async () => {
     setIsSignUp(true);
@@ -32,13 +28,20 @@ function Participant() {
     };
 
     try {
-      let response = await axios.post("/api/register", json,{
-        withCredentials:true
+      let response = await axios.post("/api/register", json, {
+        withCredentials: true,
       });
       console.log(response);
+      alert('Registration submitted successfully');
+      setShowRedirectButton(true); // Show the redirect button after successful signup
     } catch (error) {
       console.log(error);
+      alert('Registration failed');
     }
+  };
+
+  const handleRedirect = () => {
+    window.location.href = "/event"; // Replace with your desired URL
   };
 
   return (
@@ -50,7 +53,7 @@ function Participant() {
       />
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h1 className="text-3xl font-semibold text-center mb-6">{isSignUp ? 'Sign Up' : 'Sign In'}</h1>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="space-y-4">
             {isSignUp && (
               <div className="relative">
@@ -118,7 +121,7 @@ function Participant() {
               Lost password? <a href="#" className="text-blue-500">Click Here!</a>
             </p>
           </div>
-          <div className="flex justify-between gap-4 mt-6">
+          <div className="flex flex-col gap-4 mt-6">
             <button
               type="button"
               className={`w-full py-3 px-4 text-white rounded-md ${isSignUp ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'}`}
@@ -127,19 +130,23 @@ function Participant() {
             >
               Sign Up
             </button>
-            <button
-              type="button"
-              className={`w-full py-3 px-4 text-white rounded-md ${!isSignUp ? 'bg-green-500' : 'bg-gray-400 cursor-not-allowed'}`}
-              onClick={handleSignIn}
-              disabled={isSignUp}
-            >
-              Sign In
-            </button>
+
+            {/* Conditionally render the redirect button */}
+            {showRedirectButton && (
+              <button
+                type="button"
+                className="w-full py-3 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300"
+                onClick={handleRedirect}
+              >
+                Events available
+              </button>
+            )}
           </div>
         </form>
       </div>
     </div>
   );
-};
+}
 
 export default Participant;
+

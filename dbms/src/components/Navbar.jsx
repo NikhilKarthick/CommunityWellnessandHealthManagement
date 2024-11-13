@@ -50,11 +50,11 @@ function Navbar() {
                     </li>
                     <li className="px-6">
                         <Link
-                            to="/project"
+                            to="/healthdetails"
                             className="block text-lg hover:text-blue-300"
                             onClick={handleLinkClick}
                         >
-                            Project
+                            Health Details
                         </Link>
                     </li>
                     <li className="px-6">

@@ -28,7 +28,7 @@ const Payment = () => {
         }
 
         try {
-            await axios.post('http://localhost:5001/api/payments/submit', formData);
+            await axios.post('/api/payment', formData);
             alert('Payment submitted successfully');
             setFormData({
                 participant_id: '',
@@ -79,11 +79,21 @@ const Payment = () => {
                     required
                     className="mb-3 px-3 py-2 text-base border border-gray-300 rounded focus:outline-none"
                 />
+                <input
+                    type="text"
+                    name="payment_date"
+                    placeholder="Payment Date"
+                    value={formData.payment_date}
+                    onChange={handleChange}
+                    min="0"
+                    required
+                    className="mb-3 px-3 py-2 text-base border border-gray-300 rounded focus:outline-none"
+                />
 
                 <label className="text-sm text-gray-700">Select Payment Method</label>
                 <select
-                    name="payment_method"
-                    value={formData.payment_method}
+                    name="PayMethod"
+                    value={formData.PayMethod}
                     onChange={handleChange}
                     required
                     className="mb-4 px-3 py-2 text-base border border-gray-300 rounded focus:outline-none"

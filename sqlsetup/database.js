@@ -23,4 +23,79 @@ export async function participate(req,res){
     .send(`userregister`)
 }
 
+export async function enroll(req, res) {
+    try {
+      const { participant_id, program_id, enrollment_date } = req.body;
+      console.log(participant_id, program_id, enrollment_date);
+  
+      // Execute the query and insert data into the Enrollment table
+      const [add] = await pool.query(
+        `INSERT INTO Enrollment (participant_id, program_id, enrollment_date, status) VALUES (?, ?, ?, "active")`,
+        [participant_id, program_id, enrollment_date]
+      );
+  
+      console.log(add);
+  
+      return res.status(201).send("User enrolled successfully");
+    } catch (error) {
+      console.error("Error enrolling user:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+  }
+  
+export async function payment(req,res){
+   try{
+      const { participant_id,program_id,amount,payment_date,PayMethod } = req.body;
+      console.log(participant_id,program_id,amount,payment_date,PayMethod)
+      const [add] = await pool.query(
+        `INSERT INTO Payment (participant_id, program_id, amount, payment_date,PayMethod,status) VALUES (?, ?, ?, ?, ?, "completed")`,
+        [participant_id, program_id, amount,payment_date,PayMethod]
+      );
+  
+      console.log(add);
+  
+      return res.status(201).send("User paid successfully");
+
+   }catch (error) {
+      console.error("Error enrolling user:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+}
+export async function feedback(req,res){
+  try{
+    const { participant_id,program_id,rating,comments } = req.body;
+    console.log(participant_id,program_id,rating,comments)
+      const [add] = await pool.query(
+        `INSERT INTO Feedback (participant_id, program_id, rating, comments) VALUES (?, ?, ?, ?)`,
+        [participant_id, program_id, rating, comments]
+      );
+  
+      console.log(add);
+  
+      return res.status(201).send("Feedback sent successfully");
+
+  }catch (error) {
+      console.error("Error enrolling user:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+}
+export async function healthrecord(req,res){
+  try{
+    const { participant_id,program_id,date,weight,bp,cholestrol,health_status,notes } = req.body;
+    console.log(participant_id,program_id,date,weight,bp,cholestrol,health_status,notes)
+      const [add] = await pool.query(
+        `INSERT INTO HealthRecord (participant_id, program_id, date, weight, bp, cholestrol, health_status, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [participant_id, program_id, date, weight, bp, cholestrol,health_status,notes]
+      );
+  
+      console.log(add);
+  
+      return res.status(201).send("Feedback sent successfully");
+
+  }catch (error) {
+      console.error("Error enrolling user:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+}
+
 
