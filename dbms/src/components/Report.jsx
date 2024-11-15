@@ -3,32 +3,31 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function Report() {
-  const [data, setData] = useState(null);  // Store fetched data
-  const [error, setError] = useState(null);  // Error handling
-  const [participantId, setParticipantId] = useState("");  // State for participant ID
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [participantId, setParticipantId] = useState("");
 
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/generate`, {
         params: { participant_id: participantId },
       });
-      
-      setData(response.data);  // Set the data directly
-      setError(null);  // Clear any previous errors
+      console.log('API Response:', response.data);
+      setData(response.data);
+      setError(null);
     } catch (err) {
       console.error(err);
       setError('Failed to generate report from the database.');
     }
   };
-  
 
-  // Function to display aggregated data
-  const renderDetails = (label, content) => {
+  // Helper function to render table rows
+  const renderTableRows = (label, content) => {
     return content ? (
-      <div className="mb-4">
-        <h3 className="text-lg font-bold">{label}</h3>
-        <p>{content}</p>
-      </div>
+      <tr>
+        <td className="border p-2 font-bold">{label}</td>
+        <td className="border p-2">{content}</td>
+      </tr>
     ) : null;
   };
 
@@ -37,7 +36,6 @@ function Report() {
       <h1 className="text-2xl font-bold mb-4">Participant Report</h1>
 
       <div className="mb-4">
-        {/* Input field for participant ID */}
         <label className="block mb-2 text-gray-700">Participant ID:</label>
         <input
           type="text"
@@ -57,35 +55,34 @@ function Report() {
 
       {error && <p className="text-red-500 mt-4">{error}</p>}
 
-      {/* Render Participant Data */}
+      {/* Display Participant Info in a Table */}
       {data && (
         <div className="mt-6">
-          <div className="mb-4">
-            <h3 className="text-lg font-bold">Participant Info</h3>
-            <p><strong>Name:</strong> {data.participant_name}</p>
-            <p><strong>Email:</strong> {data.participant_email}</p>
-            <p><strong>Phone:</strong> {data.phone_no}</p>
-            <p><strong>Address:</strong> {data.address}</p>
-            <p><strong>Date of Birth:</strong> {data.date_of_birth}</p>
-            <p><strong>Age:</strong> {data.age}</p>
-            <p><strong>Gender:</strong> {data.gender}</p>
-          </div>
+          <h3 className="text-lg font-bold mb-2">Participant Info</h3>
+          <table className="min-w-full border-collapse border mb-6">
+            <tbody>
+              {renderTableRows('Name', data.participant_name)}
+              {renderTableRows('Email', data.participant_email)}
+              {renderTableRows('Phone', data.phone_no)}
+              {renderTableRows('Address', data.address)}
+              {renderTableRows('Date of Birth', data.date_of_birth)}
+              {renderTableRows('Age', data.age)}
+              {renderTableRows('Gender', data.gender)}
+            </tbody>
+          </table>
 
-          {/* Display Enrollment & Program Details */}
-          {renderDetails('Enrollment Details', data.enrollment_details)}
-          {renderDetails('Program Details', data.program_details)}
-
-          {/* Display Feedback Details */}
-          {renderDetails('Feedback Details', data.feedback_details)}
-
-          {/* Display Health Record Details */}
-          {renderDetails('Health Record Details', data.health_record_details)}
-
-          {/* Display Payment Details */}
-          {renderDetails('Payment Details', data.payment_details)}
-
-          {/* Display Session & Instructor Details */}
-          {renderDetails('Session and Instructor Details', data.session_instructor_details)}
+          {/* Display Aggregated Details in Another Table */}
+          <h3 className="text-lg font-bold mb-2">Details</h3>
+          <table className="min-w-full border-collapse border">
+            <tbody>
+              {renderTableRows('Enrollment Details', data.enrollment_details)}
+              {renderTableRows('Program Details', data.program_details)}
+              {renderTableRows('Feedback Details', data.feedback_details)}
+              {renderTableRows('Health Record Details', data.health_record_details)}
+              {renderTableRows('Payment Details', data.payment_details)}
+              {renderTableRows('Session and Instructor Details', data.session_instructor_details)}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
@@ -93,4 +90,3 @@ function Report() {
 }
 
 export default Report;
-
