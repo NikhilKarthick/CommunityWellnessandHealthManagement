@@ -41,11 +41,11 @@ function Navbar() {
                     </li>
                     <li className="px-6">
                         <Link
-                            to="/about"
+                            to="/report"
                             className="block text-lg hover:text-blue-300"
                             onClick={handleLinkClick}
                         >
-                            About
+                            Report
                         </Link>
                     </li>
                     <li className="px-6">

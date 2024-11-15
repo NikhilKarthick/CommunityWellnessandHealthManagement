@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { participate,enroll,payment,feedback,healthrecord } from './database.js';
+import { participate,enroll,payment,feedback,healthrecord,session,generate } from './database.js';
 
 const app = express();
 app.use(express.json());
@@ -34,6 +34,16 @@ app.post("/api/healthrecord", async (req, res) => {
   await healthrecord(req, res);
   return res.json({ "success": true });
 });
+app.post("/api/session", async (req, res) => {
+  await session(req, res);
+  return res.json({ "success": true });
+});
+app.get("/api/generate", async (req, res) => {
+  await generate(req, res);
+  return res.json({ "success": true });
+});
+
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

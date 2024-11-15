@@ -2,7 +2,7 @@
 import React from "react";
 import './App.css';
 import Home from "./components/Home";
-import About from "./components/About";
+import Report from "./components/Report";
 import HealthDetails from "./components/HealthDetails";
 import Contact from "./components/Contact";
 // import {Route} from "react-router-dom";
@@ -26,7 +26,7 @@ export default function App() {
       <Navbar/>
       <Routes>
        <Route exact path = "/" element={<Home/>} />
-       <Route exact path = "/about" element={<About/>} />
+       <Route exact path = "/report" element={<Report/>} />
        <Route exact path = "/healthdetails" element={<HealthDetails/>} />
        <Route exact path = "/contact" element={<Contact/>} />
        <Route exact path="/register" element={<Register/>}/>
@@ -37,6 +37,7 @@ export default function App() {
        <Route exact path="/participant" element={<Participant/>}/>
        <Route exact path="/payment" element={<Payment/>}/>
        <Route exact path="/session" element={<Session/>}/>
+      
 
       </Routes>
       </Router>
